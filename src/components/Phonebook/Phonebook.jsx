@@ -43,30 +43,30 @@ class Phonebook extends Component {
     });
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    if (
-      prevState.contacts !== this.state.contacts &&
-      this.state.contacts.length > 0
-    ) {
-      localStorage.setItem(
-        'PhonebookContacts',
-        JSON.stringify(this.state.contacts)
-      );
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (
+  //     prevState.contacts !== this.state.contacts &&
+  //     this.state.contacts.length > 0
+  //   ) {
+  //     localStorage.setItem(
+  //       'PhonebookContacts',
+  //       JSON.stringify(this.state.contacts)
+  //     );
+  //   }
+  // }
 
-  componentDidMount() {
-    const savedContacts = localStorage.getItem('PhonebookContacts');
+  // componentDidMount() {
+  //   const savedContacts = localStorage.getItem('PhonebookContacts');
 
-    if (savedContacts) {
-      this.setState({
-        contacts: JSON.parse(savedContacts),
-      });
-    }
-  }
+  //   if (savedContacts) {
+  //     this.setState({
+  //       contacts: JSON.parse(savedContacts),
+  //     });
+  //   }
+  // }
 
   render() {
-    const { inputValue, inputNumber, contacts } = this.state;
+    const { inputValue, inputNumber } = this.state;
 
     return (
       <>
@@ -103,8 +103,6 @@ class Phonebook extends Component {
             </form>
           </div>
         </Section>
-
-        <Contacts contacts={contacts} />
       </>
     );
   }
