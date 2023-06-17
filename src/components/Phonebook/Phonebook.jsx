@@ -34,6 +34,19 @@ class Phonebook extends Component {
     });
   };
 
+  async componentDidUpdate(prevState){
+    if(prevState.inputNumber !== this.state.inputNumber || 
+      prevState.inputValue !== this.state.inputValue){
+
+      const phoneData= {
+        name: this.state.inputValue,
+        number: this.state.inputNumber
+      }
+        localStorage.setItem('PhoneData', JSON.stringify(phoneData))
+
+    }
+  }
+
   render() {
     const { inputValue, inputNumber } = this.state;
 
