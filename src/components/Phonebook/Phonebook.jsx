@@ -34,7 +34,7 @@ class Phonebook extends Component {
     });
   };
 
-  async componentDidUpdate(prevState){
+  componentDidUpdate(prevState){
     if(prevState.inputNumber !== this.state.inputNumber || 
       prevState.inputValue !== this.state.inputValue){
 
