@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import css from './Phonebook.module.css';
 import Section from 'components/Section';
-
+import Contacts from 'components/Contacts';
 
 class Phonebook extends Component {
   state = {
     inputValue: '',
     inputNumber: '',
+    contacts: [],
   };
 
   onChange = (e) => {
@@ -23,73 +24,88 @@ class Phonebook extends Component {
 
   handleButtonClick = (e) => {
     e.preventDefault();
-    const { inputValue, inputNumber } = this.state;
+    const { inputValue, inputNumber, contacts } = this.state;
     const { createContact } = this.props;
+
+    const newContact = {
+      name: inputValue,
+      number: inputNumber,
+    };
+
+    const updatedContacts = [...contacts, newContact];
 
     createContact(inputValue, inputNumber);
 
     this.setState({
       inputValue: '',
       inputNumber: '',
+      contacts: updatedContacts,
     });
   };
 
-  componentDidUpdate(prevState){
-    if(prevState.inputNumber !== this.state.inputNumber || 
-      prevState.inputValue !== this.state.inputValue){
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevState.contacts !== this.state.contacts &&
+      this.state.contacts.length > 0
+    ) {
+      localStorage.setItem(
+        'PhonebookContacts',
+        JSON.stringify(this.state.contacts)
+      );
+    }
+  }
 
-      const phoneData= {
-        name: this.state.inputValue,
-        number: this.state.inputNumber
-      }
-        localStorage.setItem('PhoneData', JSON.stringify(phoneData))
+  componentDidMount() {
+    const savedContacts = localStorage.getItem('PhonebookContacts');
 
+    if (savedContacts) {
+      this.setState({
+        contacts: JSON.parse(savedContacts),
+      });
     }
   }
 
   render() {
-    const { inputValue, inputNumber } = this.state;
+    const { inputValue, inputNumber, contacts } = this.state;
 
     return (
-      <Section title="Phonebook">
-        <div className={css.phonebook}>
-          <form className={css.form} action="">
-            <label className={css.label} htmlFor="name">
-              Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              pattern="^[a-zA-Za-яА-Я]+(([' -][a-zA-Za-яА-Я ])?[a-zA-Za-яА-Я]*)*$"
-              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-              required
-              value={inputValue}
-              onChange={this.onChange}
-            />
-            <label className={css.label} htmlFor="number">
-              Number
-            </label>
-            <input
-              type="tel"
-              name="number"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-              required
-              value={inputNumber}
-              onChange={this.onNumberChange}
-            />
+      <>
+        <Section title="Phonebook">
+          <div className={css.phonebook}>
+            <form className={css.form} action="">
+              <label className={css.label} htmlFor="name">
+                Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={inputValue}
+                onChange={this.onChange}
+              />
+              <label className={css.label} htmlFor="number">
+                Number
+              </label>
+              <input
+                type="tel"
+                name="number"
+                value={inputNumber}
+                onChange={this.onNumberChange}
+              />
 
-            <button
-              onClick={this.handleButtonClick}
-              className={css.button}
-              name="submit"
-              type="submit"
-            >
-              Add contact
-            </button>
-          </form>
-        </div>
-      </Section>
+              <button
+                onClick={this.handleButtonClick}
+                className={css.button}
+                name="submit"
+                type="submit"
+              >
+                Add contact
+              </button>
+            </form>
+          </div>
+        </Section>
+
+        <Contacts contacts={contacts} />
+      </>
     );
   }
 }
