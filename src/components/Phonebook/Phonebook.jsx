@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import css from './Phonebook.module.css';
 import Section from 'components/Section';
-import Contacts from 'components/Contacts';
 
 class Phonebook extends Component {
   state = {
@@ -43,27 +42,27 @@ class Phonebook extends Component {
     });
   };
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (
-  //     prevState.contacts !== this.state.contacts &&
-  //     this.state.contacts.length > 0
-  //   ) {
-  //     localStorage.setItem(
-  //       'PhonebookContacts',
-  //       JSON.stringify(this.state.contacts)
-  //     );
-  //   }
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevState.contacts !== this.state.contacts &&
+      this.state.contacts.length > 0
+    ) {
+      localStorage.setItem(
+        'PhonebookContacts',
+        JSON.stringify(this.state.contacts)
+      );
+    }
+  }
 
-  // componentDidMount() {
-  //   const savedContacts = localStorage.getItem('PhonebookContacts');
+  componentDidMount() {
+    const savedContacts = localStorage.getItem('PhonebookContacts');
 
-  //   if (savedContacts) {
-  //     this.setState({
-  //       contacts: JSON.parse(savedContacts),
-  //     });
-  //   }
-  // }
+    if (savedContacts) {
+      this.setState({
+        contacts: JSON.parse(savedContacts),
+      });
+    }
+  }
 
   render() {
     const { inputValue, inputNumber } = this.state;
