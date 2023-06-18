@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import css from './Contacts.module.css';
 import Section from 'components/Section';
+import PropTypes from 'prop-types';
 
 class Contacts extends Component {
   handleDeleteClick = (id) => {
@@ -53,5 +54,14 @@ class Contacts extends Component {
   }
 }
 
+Contacts.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      number: PropTypes.string,
+    })
+  ).isRequired,
+};
 
 export default Contacts;

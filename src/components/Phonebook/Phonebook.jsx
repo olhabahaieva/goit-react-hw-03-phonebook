@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import css from './Phonebook.module.css';
 import Section from 'components/Section';
+import PropTypes from 'prop-types';
 
 class Phonebook extends Component {
   state = {
@@ -9,19 +10,19 @@ class Phonebook extends Component {
     contacts: [],
   };
 
-  onChange = (e) => {
+  onChange = e => {
     this.setState({
       inputValue: e.target.value,
     });
   };
 
-  onNumberChange = (e) => {
+  onNumberChange = e => {
     this.setState({
       inputNumber: e.target.value,
     });
   };
 
-  handleButtonClick = (e) => {
+  handleButtonClick = e => {
     e.preventDefault();
     const { inputValue, inputNumber, contacts } = this.state;
     const { createContact } = this.props;
@@ -98,3 +99,9 @@ class Phonebook extends Component {
 }
 
 export default Phonebook;
+
+Phonebook.propTypes = {
+  inputValue: PropTypes.string,
+  inputNumber: PropTypes.string,
+  contacts: PropTypes.array,
+};
