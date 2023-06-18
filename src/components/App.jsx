@@ -44,6 +44,16 @@ export class App extends Component {
     }));
   };
 
+  componentDidMount() {
+    const savedContacts = localStorage.getItem('PhonebookContacts');
+
+    if (savedContacts) {
+      this.setState({
+        contacts: JSON.parse(savedContacts),
+      });
+    }
+  }
+
   render() {
     const { contacts, filter } = this.state;
 

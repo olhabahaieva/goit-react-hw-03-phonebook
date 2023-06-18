@@ -54,16 +54,6 @@ class Phonebook extends Component {
     }
   }
 
-  componentDidMount() {
-    const savedContacts = localStorage.getItem('PhonebookContacts');
-
-    if (savedContacts) {
-      this.setState({
-        contacts: JSON.parse(savedContacts),
-      });
-    }
-  }
-
   render() {
     const { inputValue, inputNumber } = this.state;
 
